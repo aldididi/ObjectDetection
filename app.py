@@ -24,7 +24,7 @@ from utils.torch_utils import select_device, time_sync
 # from camera import Detector
 
 @torch.no_grad()
-def model_load(weights="last.pt",  # model.pt path(s)
+def model_load(weights="best.pt",  # model.pt path(s)
                device='cpu',  # cuda device, i.e. 0 or 0,1,2,3 or cpu
                half=False,  # use FP16 half-precision inference
                dnn=False,  # use OpenCV DNN for ONNX inference
