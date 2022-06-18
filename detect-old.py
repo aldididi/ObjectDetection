@@ -50,7 +50,7 @@ from utils.torch_utils import select_device, time_sync
 def run(
         weights=ROOT / 'best.pt',  # model.pt path(s)
         source=ROOT / 'data/images',  # file/dir/URL/glob, 0 for webcam
-        data=ROOT / 'data/coba.yaml',  # dataset.yaml path
+        data=ROOT / 'data/coco128.yaml',  # dataset.yaml path
         imgsz=(640, 640),  # inference size (height, width)
         conf_thres=0.25,  # confidence threshold
         iou_thres=0.45,  # NMS IOU threshold
@@ -69,7 +69,7 @@ def run(
         project=ROOT / 'static',  # save results to project/name
         name='',  # save results to project/name
         exist_ok=True,  # existing project/name ok, do not increment
-        line_thickness=2,  # bounding box thickness (pixels)
+        line_thickness=3,  # bounding box thickness (pixels)
         hide_labels=False,  # hide labels
         hide_conf=False,  # hide confidences
         half=False,  # use FP16 half-precision inference
@@ -231,7 +231,7 @@ def parse_opt():
     parser.add_argument('--project', default=ROOT / 'static', help='save results to project/name')
     parser.add_argument('--name', default='', help='save results to project/name')
     parser.add_argument('--exist-ok', default=True, action='store_true', help='existing project/name ok, do not increment')
-    parser.add_argument('--line-thickness', default=2, type=int, help='bounding box thickness (pixels)')
+    parser.add_argument('--line-thickness', default=3, type=int, help='bounding box thickness (pixels)')
     parser.add_argument('--hide-labels', default=False, action='store_true', help='hide labels')
     parser.add_argument('--hide-conf', default=False, action='store_true', help='hide confidences')
     parser.add_argument('--half', action='store_true', help='use FP16 half-precision inference')
