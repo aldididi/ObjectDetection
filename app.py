@@ -4,6 +4,7 @@ import sys
 from pathlib import Path # relative
 from re import DEBUG, sub
 from flask import Flask, render_template, request, redirect, send_file, url_for, Response
+from matplotlib import image
 import torch
 from werkzeug.utils import secure_filename, send_from_directory
 import os
@@ -156,6 +157,7 @@ def gen():
             if view_img:
                 cv2.imshow(str(p), im0)
                 cv2.waitKey(1)  # 1 millisecond
+                cv2.destroyAllWindows
 
         cv2.imwrite('frame.jpg', im0)
         yield (b'--frame\r\n'
@@ -165,6 +167,9 @@ def gen():
         # wait key to break
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+        ret, jpg = cv2.imencode('.jpg', image)
+        detection = jpg.tobytes()
+        return detection
 
 @app.route('/video_feed')
 def video_feed():
@@ -224,7 +229,7 @@ def return_file():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'best.pt', help='model path(s)')
-    parser.add_argument('--source', type=str, default=ROOT / 'data/images', help='file/dir/URL/glob, 0 for webcam')  # file/folder, 0 for webcam
+    parser.add_argument('--source', type=str, default=ROOT / 'data/images', help='file/dir/URL/glob, 1 for webcam')  # file/folder, 0 for webcam
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.15, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.45, help='IOU threshold for NMS')
